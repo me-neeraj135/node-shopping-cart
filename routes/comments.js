@@ -86,7 +86,6 @@ router.post(`/:id/edit`, (req, res, next) => {
 
   Comment.findByIdAndUpdate(id, req.body, { new: true }, (err, comment) => {
     if (err) return next(err);
-    console.log(err, comment);
     res.redirect(`/products/` + comment.productId);
   });
 });

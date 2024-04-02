@@ -68,7 +68,6 @@ router.get(`/:id`, (req, res, next) => {
     })
     .exec((err, product) => {
       if (err) return next(err);
-      // console.log(err, product.comments[0].commenter.name, `cccmmm`);
       let info = req.flash(`info`)[0];
       res.render(`product`, { product, info });
     });
@@ -117,7 +116,7 @@ router.get(`/:id/delete`, (req, res, next) => {
     Comment.deleteMany({ productId: id }, (err, comments) => {
       if (err) return next(err);
       let filePath = imagePath + `${product.image}`;
-      fs.unlink(filePath, err => {
+      fs.unlink(filePath, (err) => {
         if (err) return next(err);
         res.redirect(`/products`);
       });
@@ -201,7 +200,6 @@ router.post(`/:id/comment`, (req, res, next) => {
       { new: true },
       (err, product) => {
         if (err) return next(err);
-        // console.log(err, comment, `cmt`);
         res.redirect(`/products/` + id);
       }
     );
@@ -213,17 +211,15 @@ router.post(`/:id/comment`, (req, res, next) => {
 router.get(`/:id/addCart`, async (req, res, next) => {
   let prodId = req.params.id;
   let userId = req.session.userId;
-  // console.log(res.locals.user, `uuuu`);
   if (res.locals.user.isAdmin) {
     req.flash(`info`, `you are admin`);
     return res.redirect(`/products/` + prodId);
   } else {
     try {
       let cartItem = await Cart.findOne({ userId });
-      // console.log(cartItem, `cartItem`);
       if (cartItem) {
         let itemIndex = cartItem.productList.findIndex(
-          p => p.productId == prodId
+          (p) => p.productId == prodId
         );
 
         if (itemIndex > -1) {
@@ -233,7 +229,6 @@ router.get(`/:id/addCart`, async (req, res, next) => {
           let itemData = { productId: prodId, quantity: 1 };
           cartItem.productList.push(itemData);
         }
-        // console.log(cartItem, itemIndex, `c-i`);
         cartItem.save();
       } else {
         let itemData = {

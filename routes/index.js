@@ -15,7 +15,6 @@ router.get("/", function (req, res, next) {
           users,
         });
       });
-      // console.log(err, products, uniqueCategory, `adming`);
     } else {
       res.render(`index`);
     }

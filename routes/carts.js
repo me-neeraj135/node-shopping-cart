@@ -21,7 +21,6 @@ router.get(`/`, async (req, res, next) => {
     })
     .exec((err, cartObj) => {
       if (err) return next(err);
-      console.log(cartObj);
 
       res.render(`cart`, { cartObj });
     });
@@ -34,14 +33,12 @@ router.get(`/:id/remove`, (req, res, next) => {
   let userId = req.session.userId;
   Cart.findOne({ userId }, (err, cartObj) => {
     if (err) return next(err);
-    let itemIndex = cartObj.productList.findIndex(p => p.id == id);
+    let itemIndex = cartObj.productList.findIndex((p) => p.id == id);
     cartObj.productList.splice(itemIndex, 1);
-    cartObj.save(err => {
+    cartObj.save((err) => {
       if (err) return next();
       res.redirect(`/carts`);
     });
-
-    // console.log(cartObj, `iiii`);
   });
 });
 
@@ -52,10 +49,9 @@ router.get(`/:id/inc`, (req, res, next) => {
   let userId = req.session.userId;
   Cart.findOne({ userId }, (err, cartObj) => {
     if (err) return next(err);
-    console.log(err, cartObj, `inc`);
-    let itemIndex = cartObj.productList.findIndex(p => p.id === id);
+    let itemIndex = cartObj.productList.findIndex((p) => p.id === id);
     cartObj.productList[itemIndex].quantity += 1;
-    cartObj.save(err => {
+    cartObj.save((err) => {
       if (err) return next(err);
       res.redirect(`/carts`);
     });
@@ -69,9 +65,9 @@ router.get(`/:id/dec`, (req, res, next) => {
   let userId = req.session.userId;
   Cart.findOne({ userId }, (err, cartObj) => {
     if (err) return next(err);
-    let itemIndex = cartObj.productList.findIndex(p => p.id === id);
+    let itemIndex = cartObj.productList.findIndex((p) => p.id === id);
     cartObj.productList[itemIndex].quantity -= 1;
-    cartObj.save(err => {
+    cartObj.save((err) => {
       if (err) return next(err);
       res.redirect(`/carts`);
     });

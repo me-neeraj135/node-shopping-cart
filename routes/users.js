@@ -27,7 +27,6 @@ router.get(`/login`, (req, res, next) => {
 router.post(`/register`, (req, res, next) => {
   User.create(req.body, (err, user) => {
     if (err) return next(err);
-    // console.log(err, user);
     res.redirect(`/users/login`);
   });
 });
@@ -67,7 +66,6 @@ router.post(`/login`, (req, res, next) => {
         }
         // persist session
         req.session.userId = user.id;
-        // console.log(err, user);
         if (user.isAdmin) {
           return res.redirect(`/`);
         } else {
