@@ -8,7 +8,7 @@ var logger = require("morgan");
 
 var mongoose = require(`mongoose`);
 var mongoStore = require(`connect-mongo`);
-var session = require(`express-session`);
+var session = require("express-session");
 var flash = require(`connect-flash`);
 require(`dotenv`).config();
 
@@ -18,17 +18,17 @@ var usersRouter = require("./routes/users");
 var productsRouter = require(`./routes/products`);
 var commentsRouter = require(`./routes/comments`);
 var cartRouter = require(`./routes/carts`);
+var DB = process.env.DATABASE;
 
 // connect dataBase
-
 mongoose.connect(
-  `mongodb://localhost/e-com`,
+  DB,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   },
-  err => {
-    console.log(err ? err : `database connected`);
+  (err) => {
+    console.log(err ? err : `database connected successfully...`);
   }
 );
 
@@ -59,7 +59,7 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
-    store: mongoStore.create({ mongoUrl: `mongodb://localhost/e-com` }),
+    store: mongoStore.create({ mongoUrl: DB }),
   })
 );
 // add flash

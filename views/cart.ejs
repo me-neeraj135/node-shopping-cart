@@ -1,20 +1,26 @@
 <!-- @format -->
 
-<% include partial/header%>
+<%- include("partial/header") %>
+
 <main class="height">
   <section class="container padding-tb">
     <h2 class="secondary-heading padding-tb">my cart</h2>
 
-    <table>
-      <tr>
-        <th>product name</th>
-        <th>product-image</th>
-        <th>quantity</th>
-        <th>₹ price</th>
-        <th>₹ sub Total</th>
-      </tr>
+    
+<% if(cartObj===null){ %>
+    <h1>No product in your cart</h1>
+<%}else{%>
 
-      <% cartObj.productList.forEach(elm=>{%>
+  <table>
+    <tr>
+      <th>product name</th>
+      <th>product-image</th>
+      <th>quantity</th>
+      <th>₹ price</th>
+      <th>₹ sub Total</th>
+    </tr>
+ <% cartObj.productList.forEach(elm=>{%>
+  
 
       <tr>
         <td><span class="p-name"><%=elm.productId.name %></span> <br /></td>
@@ -58,5 +64,9 @@
       </button>
     </div>
   </section>
+
+<%}%>
+     
 </main>
-<% include partial/footer %>
+<%- include("partial/footer") %>
+

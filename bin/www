@@ -5,7 +5,7 @@
  * @format
  */
 
-var app = require("../index.js");
+var app = require("../app.js");
 var debug = require("debug")("e-com:server");
 var http = require("http");
 
